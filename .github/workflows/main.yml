@@ -5,9 +5,6 @@ on:
     branches: [main]
   pull_request:
 
-env:
-  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-
 jobs:
   cypress-tests:
     runs-on: ubuntu-latest
@@ -15,32 +12,50 @@ jobs:
     strategy:
       matrix:
         browser: [chrome, firefox]
-        regression-chunk: [1,2,3]
+        regression-chunk: [1, 2, 3]
       fail-fast: false
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # Build Docker image dynamically
       - name: Build Docker Image
         run: docker build -t rahul-cypress-custom .
 
-      # Run Smoke Test
-      - name: Run Smoke Test
+      # Run Smoke Tests
+      - name: Run Smoke Tests
         run: |
-          docker run -v $PWD:/e2e -w /e2e rahul-cypress-custom \
-          npm run test:smoke${{ matrix.browser == 'firefox' && ':firefox' || '' }}
+          docker run \
+            -e CI=true \
+            -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
+            -e GITHUB_RUN_ID=${{ github.run_id }} \
+            -e GITHUB_SHA=${{ github.sha }} \
+            -v $PWD:/e2e \
+            -w /e2e \
+            rahul-cypress-custom \
+            npm run test:smoke${{ matrix.browser == 'firefox' && ':firefox' || '' }}
 
-      # Run Regression Chunk
+      # Run Regression Chunks
       - name: Run Regression Chunk
         run: |
-          docker run -v $PWD:/e2e -w /e2e rahul-cypress-custom \
-          npm run test:regression:chunk${{ matrix.regression-chunk }}${{ matrix.browser == 'firefox' && ':firefox' || '' }}
+          docker run \
+            -e CI=true \
+            -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
+            -e GITHUB_RUN_ID=${{ github.run_id }} \
+            -e GITHUB_SHA=${{ github.sha }} \
+            -v $PWD:/e2e \
+            -w /e2e \
+            rahul-cypress-custom \
+            npm run test:regression:chunk${{ matrix.regression-chunk }}${{ matrix.browser == 'firefox' && ':firefox' || '' }}
 
       # Run Retest
       - name: Run Retest
         run: |
-          docker run -v $PWD:/e2e -w /e2e rahul-cypress-custom \
-          npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }}
-
-     
+          docker run \
+            -e CI=true \
+            -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
+            -e GITHUB_RUN_ID=${{ github.run_id }} \
+            -e GITHUB_SHA=${{ github.sha }} \
+            -v $PWD:/e2e \
+            -w /e2e \
+            rahul-cypress-custom \
+            npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }}
