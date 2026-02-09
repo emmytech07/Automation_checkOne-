@@ -6,19 +6,19 @@
  "scripts": {
   "cypress:open": "cypress open",
 
-  "test:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.js\" --browser chrome --headless --record --parallel",
-  "test:smoke:firefox": "cypress run --spec \"cypress/e2e/smoke/**/*.js\" --browser firefox --headless --record --parallel",
+  "test:smoke": "cypress run --spec \"cypress/e2e/smoke/**/*.cy.js\" --browser chrome --headless --record --parallel",
+  "test:smoke:firefox": "cypress run --spec \"cypress/e2e/smoke/**/*.cy.js\" --browser firefox --headless --record --parallel",
 
-  "test:regression:chunk1": "cypress run --spec \"cypress/e2e/regression/chunk-1/**/*.js\" --browser chrome --headless --record --parallel",
-  "test:regression:chunk2": "cypress run --spec \"cypress/e2e/regression/chunk-2/**/*.js\" --browser chrome --headless --record --parallel",
-  "test:regression:chunk3": "cypress run --spec \"cypress/e2e/regression/chunk-3/**/*.js\" --browser chrome --headless --record --parallel",
+  "test:regression:chunk1": "cypress run --spec \"cypress/e2e/regression/chunk-1/**/*.cy.js\" --browser chrome --headless --record --parallel",
+  "test:regression:chunk2": "cypress run --spec \"cypress/e2e/regression/chunk-2/**/*.cy.js\" --browser chrome --headless --record --parallel",
+  "test:regression:chunk3": "cypress run --spec \"cypress/e2e/regression/chunk-3/**/*.cy.js\" --browser chrome --headless --record --parallel",
 
-  "test:regression:chunk1:firefox": "cypress run --spec \"cypress/e2e/regression/chunk-1/**/*.js\" --browser firefox --headless --record --parallel",
-  "test:regression:chunk2:firefox": "cypress run --spec \"cypress/e2e/regression/chunk-2/**/*.js\" --browser firefox --headless --record --parallel",
-  "test:regression:chunk3:firefox": "cypress run --spec \"cypress/e2e/regression/chunk-3/**/*.js\" --browser firefox --headless --record --parallel",
+  "test:regression:chunk1:firefox": "cypress run --spec \"cypress/e2e/regression/chunk-1/**/*.cy.js\" --browser firefox --headless --record --parallel",
+  "test:regression:chunk2:firefox": "cypress run --spec \"cypress/e2e/regression/chunk-2/**/*.cy.js\" --browser firefox --headless --record --parallel",
+  "test:regression:chunk3:firefox": "cypress run --spec \"cypress/e2e/regression/chunk-3/**/*.cy.js\" --browser firefox --headless --record --parallel",
 
-  "test:retest": "cypress run --spec \"cypress/e2e/retest/**/*.js\" --browser chrome --headless --record --parallel",
-  "test:retest:firefox": "cypress run --spec \"cypress/e2e/retest/**/*.js\" --browser firefox --headless --record --parallel"
+  "test:retest": "cypress run --spec \"cypress/e2e/retest/**/*.cy.js\" --browser chrome --headless --record --parallel",
+  "test:retest:firefox": "cypress run --spec \"cypress/e2e/retest/**/*.cy.js\" --browser firefox --headless --record --parallel"
 },
 
   "keywords": [],
