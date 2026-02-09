@@ -40,11 +40,4 @@ jobs:
           docker run -v $PWD:/e2e -w /e2e rahul-cypress-custom \
           npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }}
 
-      # Upload Cypress Artifacts
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: cypress-artifacts-${{ matrix.browser }}-chunk${{ matrix.regression-chunk }}
-          path: |
-            cypress/videos
-            cypress/screenshots
+     
