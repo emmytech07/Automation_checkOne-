@@ -1,0 +1,29 @@
+{
+  "name": "automation_checkone-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+   "cypress:open": "cypress open",
+    
+    "test:smoke": "cypress run --spec 'cypress/e2e/smoke/**/*.js' --browser chrome --headless",
+    "test:smoke:firefox": "cypress run --spec 'cypress/e2e/smoke/**/*.js' --browser firefox --headless",
+    
+    "test:regression:chunk1": "cypress run --spec 'cypress/e2e/regression/chunk-1/**/*.js' --browser chrome --headless",
+    "test:regression:chunk2": "cypress run --spec 'cypress/e2e/regression/chunk-2/**/*.js' --browser chrome --headless",
+    "test:regression:chunk3": "cypress run --spec 'cypress/e2e/regression/chunk-3/**/*.js' --browser chrome --headless",
+
+    "test:regression:chunk1:firefox": "cypress run --spec 'cypress/e2e/regression/chunk-1/**/*.js' --browser firefox --headless",
+    "test:regression:chunk2:firefox": "cypress run --spec 'cypress/e2e/regression/chunk-2/**/*.js' --browser firefox --headless",
+    "test:regression:chunk3:firefox": "cypress run --spec 'cypress/e2e/regression/chunk-3/**/*.js' --browser firefox --headless",
+
+    "test:retest": "cypress run --spec 'cypress/e2e/retest/**/*.js' --browser chrome --headless",
+    "test:retest:firefox": "cypress run --spec 'cypress/e2e/retest/**/*.js' --browser firefox --headless"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^15.10.0"
+  }
+}
