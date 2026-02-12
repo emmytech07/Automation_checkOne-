@@ -17,6 +17,9 @@ module.exports = defineConfig({
     screenshotOnRunFailure: true,
     trashAssetsBeforeRuns: true,
     screenshotsFolder: 'cypress/screenshots',
+    // video: true,
+    // viewportHeight: 1080,
+    // viewportWidth:1920,
     env:{
       first_name: "James",
       webDriverUni_homepage:"http://www.webdriveruniversity.com"

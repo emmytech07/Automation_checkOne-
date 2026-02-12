@@ -9,7 +9,7 @@ describe("Test Contact Us form via WebdriverUni", () => {
     const contact_us_PO = new ContactUs_PO()
     before(function(){
         cy.fixture('example').then(function(data) {
-            // this.data=data;
+            cy.viewport(430, 932)
             globalThis.data = data;
         })
     })
