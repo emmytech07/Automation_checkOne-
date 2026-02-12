@@ -1,12 +1,12 @@
-import HomePage_PO from "../../support/pageObjects/webdriver-uni/HomePage_PO";
-import Contact_Us_PO from "../../support/pageObjects/webdriver-uni/Contact_US_PO";
+import HomePage_PO from "../../pages/webdriver-uni/HomePage_PO";
+import ContactUs_PO from "../../pages/webdriver-uni/ContactUs_PO";
 /// <reference types="cypress" />
 
 describe("Test Contact Us form via WebdriverUni", () => {
 
 // Make my class global to avoid reprtition 
     const homepage_PO = new HomePage_PO();
-    const contact_us_PO = new Contact_Us_PO()
+    const contact_us_PO = new ContactUs_PO()
     before(function(){
         cy.fixture('example').then(function(data) {
             // this.data=data;
