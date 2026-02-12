@@ -4,6 +4,9 @@ import Contact_Us_PO from "../../support/pageObjects/webdriver-uni/Contact_US_PO
 
 describe("Test Contact Us form via WebdriverUni", () => {
 
+// Make my class global to avoid reprtition 
+    const homepage_PO = new HomePage_PO();
+    const contact_us_PO = new Contact_Us_PO()
     before(function(){
         cy.fixture('example').then(function(data) {
             // this.data=data;
@@ -13,7 +16,6 @@ describe("Test Contact Us form via WebdriverUni", () => {
 
     beforeEach(() =>{
         // POM
-        const homepage_PO = new HomePage_PO();
         homepage_PO.visitHomePage();
         homepage_PO.clickOn_ContactUs_Button()
         
@@ -25,7 +27,6 @@ describe("Test Contact Us form via WebdriverUni", () => {
         cy.url().should('include', 'contactus');
 
         // Using POM
-        const contact_us_PO = new Contact_Us_PO()
         contact_us_PO.contactForm_Submission(Cypress.env('first_name'),data.last_name,data.email,"How can I learn Cypress?",'h1','Thank You for your Message!');
     });
 
