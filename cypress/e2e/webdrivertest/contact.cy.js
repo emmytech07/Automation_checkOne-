@@ -1,3 +1,4 @@
+import HomePage_PO from "../../support/pageObjects/webdriver-uni/HomePage_PO";
 /// <reference types="cypress" />
 
 describe("Test Contact Us form via WebdriverUni", () => {
@@ -10,8 +11,12 @@ describe("Test Contact Us form via WebdriverUni", () => {
     })
 
     beforeEach(() =>{
-        cy.visit(Cypress.env("webDriverUni_homepage") + "/Contact-Us/contactus.html")
-        // cy.get('#contact-us').invoke('removeAttr', 'target').click({force:true})
+        // cy.get('#contact-us').invoke('removeAttr', 'target').click({force:true}). improve the code to load directly
+        // cy.visit(Cypress.env("webDriverUni_homepage") + "/Contact-Us/contactus.html")
+
+        // POM
+
+        
     })
 
     it("Should be able to submit a successful submission via contact us form", () => {
