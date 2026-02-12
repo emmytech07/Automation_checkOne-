@@ -1,6 +1,6 @@
 class HomePage_PO {
     visitHomePage(){
-        cy.visit(Cypress.env("webDriverUni_homepage"))
+        cy.visit(Cypress.env("webDriverUni_homepage"), {timeout:60000})
     }
     clickOn_ContactUs_Button(){
         cy.get('#contact-us').invoke('removeAttr', 'target').click({force:true})

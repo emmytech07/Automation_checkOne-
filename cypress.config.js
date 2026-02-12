@@ -14,6 +14,9 @@ module.exports = defineConfig({
     defaultCommandTimeout: 10000,
     pageLoadTimeout: 120000,
     allowCypressEnv: true,
+    screenshotOnRunFailure: true,
+    trashAssetsBeforeRuns: true,
+    screenshotsFolder: 'cypress/screenshots',
     env:{
       first_name: "James",
       webDriverUni_homepage:"http://www.webdriveruniversity.com"

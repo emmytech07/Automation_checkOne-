@@ -3,7 +3,7 @@ import ContactUs_PO from "../../pages/webdriver-uni/ContactUs_PO";
 /// <reference types="cypress" />
 
 describe("Test Contact Us form via WebdriverUni", () => {
-
+    Cypress.config('defaultCommandTimeout', 40000)
 // Make my class global to avoid reprtition 
     const homepage_PO = new HomePage_PO();
     const contact_us_PO = new ContactUs_PO()
@@ -27,7 +27,7 @@ describe("Test Contact Us form via WebdriverUni", () => {
         cy.url().should('include', 'contactus');
 
         // Using POM
-        contact_us_PO.contactForm_Submission(Cypress.env('first_name'),data.last_name,data.email,"How can I learn Cypress?",'h1','Thank You for your Message!');
+        contact_us_PO.contactForm_Submission(Cypress.env('first_name'),data.last_name, data.email,"How can I learn Cypress?",'h1','Thank You for your Message!');
     });
 
     it("Should not be able to submit a successful submission via contact us form as all fields are required", () => {
