@@ -1,7 +1,7 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
-  allowCypressEnv: false,
+  allowCypressEnv: true,
   projectId: "bprn3n",
   e2e: {
     
@@ -13,7 +13,7 @@ module.exports = defineConfig({
     baseUrl:"http://www.webdriveruniversity.com",
     defaultCommandTimeout: 10000,
     pageLoadTimeout: 120000,
-    allowCypressEnv: true,
+    // allowCypressEnv: true,
     screenshotOnRunFailure: true,
     trashAssetsBeforeRuns: true,
     screenshotsFolder: 'cypress/screenshots',

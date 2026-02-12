@@ -16,6 +16,8 @@ describe("Test Contact Us form via WebdriverUni", () => {
 
     beforeEach(() =>{
         // POM
+        cy.clearLocalStorage()
+        cy.clearCookies()
         homepage_PO.visitHomePage();
         homepage_PO.clickOn_ContactUs_Button()
         
