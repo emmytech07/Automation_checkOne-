@@ -1,4 +1,5 @@
 import HomePage_PO from "../../support/pageObjects/webdriver-uni/HomePage_PO";
+import Contact_Us_PO from "../../support/pageObjects/webdriver-uni/Contact_US_PO";
 /// <reference types="cypress" />
 
 describe("Test Contact Us form via WebdriverUni", () => {
@@ -11,11 +12,10 @@ describe("Test Contact Us form via WebdriverUni", () => {
     })
 
     beforeEach(() =>{
-        // cy.get('#contact-us').invoke('removeAttr', 'target').click({force:true}). improve the code to load directly
-        // cy.visit(Cypress.env("webDriverUni_homepage") + "/Contact-Us/contactus.html")
-
         // POM
-
+        const homepage_PO = new HomePage_PO();
+        homepage_PO.visitHomePage();
+        homepage_PO.clickOn_ContactUs_Button()
         
     })
 
@@ -24,13 +24,13 @@ describe("Test Contact Us form via WebdriverUni", () => {
         cy.title().should('include', 'WebDriver | Contact Us');
         cy.url().should('include', 'contactus');
 
-        // Customa code added on command page 
-        cy.webDriverUni_Contact_FormSubmission(Cypress.env('first_name'),data.last_name,data.email,"How can I learn Cypress?",'h1','Thank You for your Message!');
-
-
+        // Using POM
+        const contact_us_PO = new Contact_Us_PO()
+        contact_us_PO.contactForm_Submission(Cypress.env('first_name'),data.last_name,data.email,"How can I learn Cypress?",'h1','Thank You for your Message!');
     });
 
     it("Should not be able to submit a successful submission via contact us form as all fields are required", () => {
+        // Using Custom Command 
         cy.webDriverUni_Contact_FormSubmission(data.first_name, data.last_name, " ", "How can I learn Cypress?", 'body', 'Thank You for your Message!');
 
     });
