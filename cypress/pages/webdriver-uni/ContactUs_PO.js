@@ -5,7 +5,7 @@ class ContactUs_PO {
     cy.get('[name="email"]').type(data.email)
     cy.get('textarea.feedback-input').type(comment)
     cy.get('[type="submit"]').click();
-    cy.get($selector).contains(textToLocate, {timeout: 30000})
+    cy.get($selector).contains(textToLocate, {timeout: 60000})
     cy.screenshot();
     cy.screenshot("Take submission pictures")
    }

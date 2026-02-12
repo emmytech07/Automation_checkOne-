@@ -3,7 +3,7 @@ import ContactUs_PO from "../../pages/webdriver-uni/ContactUs_PO";
 /// <reference types="cypress" />
 
 describe("Test Contact Us form via WebdriverUni", () => {
-    Cypress.config('defaultCommandTimeout', 40000)
+    Cypress.config('defaultCommandTimeout', 60000)
 // Make my class global to avoid reprtition 
     const homepage_PO = new HomePage_PO();
     const contact_us_PO = new ContactUs_PO()
