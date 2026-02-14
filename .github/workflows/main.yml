@@ -11,54 +11,65 @@ jobs:
 
     strategy:
       matrix:
+        # This creates 6 parallel runners (2 browsers x 3 chunks)
         browser: [chrome, firefox]
         regression-chunk: [1, 2, 3]
       fail-fast: false
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
+      # 1. Set up Docker Buildx (Required for high-performance caching)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 2. Build Image with GitHub Actions Cache (type=gha)
+      # This skips 'npm ci' if package.json hasn't changed
       - name: Build Docker Image
-        run: docker build -t rahul-cypress-custom .
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: rahul-cypress-custom:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-      # Run Smoke Tests
+      # 3. Run Smoke Tests (Only on the first chunk to save resources)
       - name: Run Smoke Tests
+        if: matrix.regression-chunk == 1
         run: |
           docker run \
             -e CI=true \
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
-            -e GITHUB_RUN_ID=${{ github.run_id }} \
-            -e GITHUB_SHA=${{ github.sha }} \
             -v $PWD:/e2e \
             -v /e2e/node_modules \
             -w /e2e \
-            rahul-cypress-custom \
+            rahul-cypress-custom:latest \
             npm run test:smoke${{ matrix.browser == 'firefox' && ':firefox' || '' }}
 
-      # Run Regression Chunks
+      # 4. Run Regression Chunks in Parallel
       - name: Run Regression Chunk
         run: |
           docker run \
             -e CI=true \
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
             -e GITHUB_RUN_ID=${{ github.run_id }} \
-            -e GITHUB_SHA=${{ github.sha }} \
             -v $PWD:/e2e \
             -v /e2e/node_modules \
             -w /e2e \
-            rahul-cypress-custom \
+            rahul-cypress-custom:latest \
             npm run test:regression:chunk${{ matrix.regression-chunk }}${{ matrix.browser == 'firefox' && ':firefox' || '' }}
 
-      # Run Retest
+      # 5. Run Retest (Optional: only if previous steps fail or as a final check)
       - name: Run Retest
+        if: always() 
         run: |
           docker run \
             -e CI=true \
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
-            -e GITHUB_RUN_ID=${{ github.run_id }} \
-            -e GITHUB_SHA=${{ github.sha }} \
             -v $PWD:/e2e \
             -v /e2e/node_modules \
             -w /e2e \
-            rahul-cypress-custom \
+            rahul-cypress-custom:latest \
             npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }}
