@@ -19,7 +19,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Necessary because your results folder is git-ignored
       - name: Create Results Directory
         run: mkdir -p cypress/results/mochawesome
 
@@ -71,7 +70,7 @@ jobs:
             npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }}
         continue-on-error: true
 
-      # 4. Upload Test Fragments (Screenshots removed)
+      # 4. Upload Test Fragments
       - name: Upload Test Fragments
         if: always()
         uses: actions/upload-artifact@v4
@@ -101,8 +100,10 @@ jobs:
       - name: Merge and Generate Master HTML Report
         run: |
           mkdir -p cypress/reports
-          # Using recursive glob to find JSONs from Smoke, Regression, and Retest
-          npx mochawesome-merge "all-results/*.json" > cypress/reports/master-report.json
+          # FIX: Replaced '>' redirect with '-o' to prevent JSON corruption from Node warnings
+          npx mochawesome-merge "all-results/*.json" -o cypress/reports/master-report.json
+          
+          # Generate the HTML report
           npx marge cypress/reports/master-report.json --reportDir cypress/reports --inline true
 
       - name: Upload Final Master Report
