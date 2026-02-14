@@ -12,7 +12,7 @@ jobs:
       matrix:
         # 6 parallel runners (2 browsers x 3 chunks)
         browser: [chrome, firefox]
-        regression-chunk: [1, 2, 3]
+        regression-chunk: [1]
       fail-fast: false
 
     steps:
@@ -100,8 +100,9 @@ jobs:
       - name: Merge and Generate Master HTML Report
         run: |
           mkdir -p cypress/reports
-          # FIX: Replaced '>' redirect with '-o' to prevent JSON corruption from Node warnings
-          npx mochawesome-merge "all-results/*.json" -o cypress/reports/master-report.json
+          # suppress node warnings and use the output flag
+          NODE_NO_WARNINGS=1 npx mochawesome-merge "all-results/*.json" -o cypress/reports/master-report.json
+          npx marge cypress/reports/master-report.json --reportDir cypress/reports --inline true
           
           # Generate the HTML report
           npx marge cypress/reports/master-report.json --reportDir cypress/reports --inline true

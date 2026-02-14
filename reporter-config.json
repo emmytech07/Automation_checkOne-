@@ -10,7 +10,8 @@
             "quite":true,
             "overwrite":false,
             "html":false,
-            "json":true
+            "json":true,
+            "reportFilename": "[status]-[name]-[hash]" 
         }
     }
   
