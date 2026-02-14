@@ -12,7 +12,7 @@ node_modules/
 node_modules/
 
 # Cypress outputs
-cypress/results/mochawesome/*
+cypress/results/mochawesome/
 cypress/screenshots/
 cypress/videos/
 

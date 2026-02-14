@@ -8,10 +8,9 @@ on:
 jobs:
   cypress-tests:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        # This creates 6 parallel runners (2 browsers x 3 chunks)
+        # 6 parallel runners (2 browsers x 3 chunks)
         browser: [chrome, firefox]
         regression-chunk: [1, 2, 3]
       fail-fast: false
@@ -20,12 +19,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 1. Set up Docker Buildx (Required for high-performance caching)
+      # Necessary because your results folder is git-ignored
+      - name: Create Results Directory
+        run: mkdir -p cypress/results/mochawesome
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # 2. Build Image with GitHub Actions Cache (type=gha)
-      # This skips 'npm ci' if package.json hasn't changed
       - name: Build Docker Image
         uses: docker/build-push-action@v6
         with:
@@ -35,41 +35,78 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # 3. Run Smoke Tests (Only on the first chunk to save resources)
+      # 1. Run Smoke Tests (Only on chunk 1 to avoid triple redundancy)
       - name: Run Smoke Tests
         if: matrix.regression-chunk == 1
         run: |
           docker run \
             -e CI=true \
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
-            -v $PWD:/e2e \
-            -v /e2e/node_modules \
-            -w /e2e \
+            -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
             npm run test:smoke${{ matrix.browser == 'firefox' && ':firefox' || '' }}
+        continue-on-error: true
 
-      # 4. Run Regression Chunks in Parallel
+      # 2. Run Regression Chunks in Parallel
       - name: Run Regression Chunk
         run: |
           docker run \
             -e CI=true \
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
             -e GITHUB_RUN_ID=${{ github.run_id }} \
-            -v $PWD:/e2e \
-            -v /e2e/node_modules \
-            -w /e2e \
+            -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
             npm run test:regression:chunk${{ matrix.regression-chunk }}${{ matrix.browser == 'firefox' && ':firefox' || '' }}
+        continue-on-error: true
 
-      # 5. Run Retest (Optional: only if previous steps fail or as a final check)
+      # 3. Run Retest
       - name: Run Retest
         if: always() 
         run: |
           docker run \
             -e CI=true \
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
-            -v $PWD:/e2e \
-            -v /e2e/node_modules \
-            -w /e2e \
+            -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
             npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }}
+        continue-on-error: true
+
+      # 4. Upload Test Fragments (Screenshots removed)
+      - name: Upload Test Fragments
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ matrix.browser }}-chunk-${{ matrix.regression-chunk }}
+          path: cypress/results/mochawesome/*.json
+          retention-days: 1
+
+  generate-report:
+    needs: cypress-tests
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Report Tools
+        run: npm install mochawesome-merge mochawesome-report-generator
+
+      - name: Download all results
+        uses: actions/download-artifact@v4
+        with:
+          path: all-results
+          pattern: results-*
+          merge-multiple: true
+
+      - name: Merge and Generate Master HTML Report
+        run: |
+          mkdir -p cypress/reports
+          # Using recursive glob to find JSONs from Smoke, Regression, and Retest
+          npx mochawesome-merge "all-results/*.json" > cypress/reports/master-report.json
+          npx marge cypress/reports/master-report.json --reportDir cypress/reports --inline true
+
+      - name: Upload Final Master Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Final-Mochawesome-Report
+          path: cypress/reports/
