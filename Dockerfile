@@ -1,18 +1,20 @@
-# Base image with Cypress + Node + Browsers
+# 1. Base image with Cypress + Node + Browsers
 FROM cypress/included:15.10.0
 
-# Optional: install extra tools
-# RUN apt-get update && apt-get install -y curl unzip
-
+# 2. Set working directory
 WORKDIR /e2e
 
-# Copy package files and install dependencies
+# 3. FIX: Tell Node to look in the local node_modules for your reporter
+# This links the global Cypress with your local plugins
+ENV NODE_PATH=/e2e/node_modules
+
+# 4. Copy package files and install dependencies
 COPY package.json package-lock.json ./
 RUN npm ci
 
-# Copy all test files
+# 5. Copy all test files
 COPY cypress ./cypress
 COPY cypress.config.js ./
 
-# Default command (smoke test)
-CMD ["npm", "run", "test:smoke"]
+# 6. Use the global cypress binary directly to avoid re-downloading
+ENTRYPOINT ["cypress", "run"]
