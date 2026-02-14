@@ -12,7 +12,7 @@ jobs:
       matrix:
         # 6 parallel runners (2 browsers x 3 chunks)
         browser: [chrome, firefox]
-        regression-chunk: [1]
+        regression-chunk: [1, 2, 3]
       fail-fast: false
 
     steps:
