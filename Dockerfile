@@ -2,7 +2,7 @@
 FROM cypress/included:15.10.0
 
 # Optional: install extra tools
-RUN apt-get update && apt-get install -y curl unzip
+# RUN apt-get update && apt-get install -y curl unzip
 
 WORKDIR /e2e
 
@@ -10,8 +10,9 @@ WORKDIR /e2e
 COPY package.json package-lock.json ./
 RUN npm ci
 
-# Copy the rest of the project
-COPY . .
+# Copy all test files
+COPY cypress ./cypress
+COPY cypress.config.js ./
 
 # Default command (smoke test)
 CMD ["npm", "run", "test:smoke"]
