@@ -1,18 +1,11 @@
-# Base image with Cypress + Node + Browsers
-FROM cypress/included:15.10.0
-
-# Optional: install extra tools
-# RUN apt-get update && apt-get install -y curl unzip
+FROM cypress/base:20.11.0
 
 WORKDIR /e2e
 
-# Copy package files and install dependencies
 COPY package.json package-lock.json ./
+
 RUN npm ci
 
-# Copy all test files
-COPY cypress ./cypress
-COPY cypress.config.js ./
+COPY . .
 
-# Default command (smoke test)
-CMD ["npm", "run", "test:smoke"]
+CMD ["npx", "cypress", "run"]

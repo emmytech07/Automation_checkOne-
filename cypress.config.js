@@ -20,7 +20,7 @@ module.exports = defineConfig({
     // video: true,
     // viewportHeight: 1080,
     // viewportWidth:1920,
-     reporter: 'cypress-multi-reporters',
+    reporter: 'cypress-multi-reporters',
     reporterOptions: {
     configFile: 'reporter-config.json',
   },
