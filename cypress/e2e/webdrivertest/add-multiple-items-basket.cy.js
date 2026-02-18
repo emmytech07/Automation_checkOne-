@@ -13,7 +13,7 @@ describe("Add multiple items to basket", () => {
   });
   it("Add specific items to basket", () => {
     globalThis.data.productName.forEach(element => {
-      cy.addProductToBasket(element)
+      cy.addProductToBasket(element);
     });
   });
   
