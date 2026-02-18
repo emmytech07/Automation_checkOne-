@@ -1,11 +1,10 @@
-import registerCypressGrep from '@cypress/grep'
-registerCypressGrep()
+
 
 /// <reference types="cypress" />
 
 context('Assertions', () => {
   beforeEach(() => {
-    cy.visit('https://example.cypress.io/commands/assertions')
+    cy.visit('commands/assertions')
   })
 
   describe('Implicit Assertions @not-prod', () => {

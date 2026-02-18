@@ -1,4 +1,5 @@
 const { defineConfig } = require("cypress");
+const grep = require("@cypress/grep/plugin");
 const fs = require('fs-extra')
 const path = require('path')
 
@@ -26,7 +27,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
       // accept a environment value or use development by default
-      const file = config.env.environment || ''
+      const file = config.env.ENVIRONMENT_NAME || ''
 
       return getConfigurationByFile(file, config.projectRoot)
     },

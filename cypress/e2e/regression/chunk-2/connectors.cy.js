@@ -2,7 +2,7 @@
 
 context('Connectors', () => {
   beforeEach(() => {
-    cy.visit('https://example.cypress.io/commands/connectors')
+    cy.visit('commands/connectors')
   })
 
   it('.each() - iterate over an array of elements', () => {

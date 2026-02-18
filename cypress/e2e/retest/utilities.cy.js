@@ -2,7 +2,7 @@
 
 context('Utilities', () => {
   beforeEach(() => {
-    cy.visit('https://example.cypress.io/utilities')
+    cy.visit('/'+'utilities')
   })
 
   it('Cypress._ - call a lodash method', () => {
