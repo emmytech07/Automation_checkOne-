@@ -1,4 +1,8 @@
+import registerCypressGrep from '@cypress/grep'
+registerCypressGrep()
 /// <reference types="cypress" />
+
+
 
 context('Actions', () => {
   beforeEach(() => {
@@ -7,7 +11,7 @@ context('Actions', () => {
 
   // https://on.cypress.io/interacting-with-elements
 
-  it('.type() - type into a DOM element', () => {
+  it('.type() - type into a DOM element @not-prod', () => {
     // https://on.cypress.io/type
     cy.get('.action-email').type('fake@email.com')
     cy.get('.action-email').should('have.value', 'fake@email.com')
@@ -65,7 +69,7 @@ context('Actions', () => {
     cy.get('.action-form').next().should('contain', 'Your form has been submitted!')
   })
 
-  it('.click() - click on a DOM element', () => {
+  it('.click() - click on a DOM element @not-prod', () => {
     // https://on.cypress.io/click
     cy.get('.action-btn').click()
 
@@ -160,7 +164,7 @@ context('Actions', () => {
     cy.get('.action-radios [type="radio"]').should('be.checked')
   })
 
-  it('.uncheck() - uncheck a checkbox element', () => {
+  it('.uncheck() - uncheck a checkbox element @not-prod', () => {
     // https://on.cypress.io/uncheck
 
     // By default, .uncheck() will uncheck all matching
@@ -195,7 +199,7 @@ context('Actions', () => {
     cy.get('.action-check [disabled]').should('not.be.checked')
   })
 
-  it('.select() - select an option in a <select> element', () => {
+  it('.select() - select an option in a <select> element @not-prod', () => {
     // https://on.cypress.io/select
 
     // at first, no option should be selected
@@ -232,7 +236,7 @@ context('Actions', () => {
       .invoke('val').should('include', 'fr-oranges')
   })
 
-  it('.scrollIntoView() - scroll an element into view', () => {
+  it('.scrollIntoView() - scroll an element into view @not-prod', () => {
     // https://on.cypress.io/scrollintoview
 
     // normally all of these buttons are hidden,
@@ -282,7 +286,7 @@ context('Actions', () => {
       .should('have.text', '25')
   })
 
-  it('cy.scrollTo() - scroll the window or element to a position', () => {
+  it('cy.scrollTo() - scroll the window or element to a position @not-prod', () => {
     // https://on.cypress.io/scrollto
 
     // You can scroll to 9 specific positions of an element:

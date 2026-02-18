@@ -1,11 +1,14 @@
 /// <reference types="cypress" />
+import registerCypressGrep from '@cypress/grep'
+registerCypressGrep()
+
 
 context('Aliasing', () => {
   beforeEach(() => {
     cy.visit('https://example.cypress.io/commands/aliasing')
   })
 
-  it('.as() - alias a DOM element for later use', () => {
+  it('.as() - alias a DOM element for later use @not-prod', () => {
     // https://on.cypress.io/as
 
     // Alias a DOM element for use later
