@@ -1,4 +1,22 @@
 const { defineConfig } = require("cypress");
+const fs = require('fs-extra')
+const path = require('path')
+
+function getConfigurationByFile(file, projectRoot) {
+  const pathToConfigFile = path.join(
+    projectRoot,
+    'cypress',
+    'config',
+    `${file}.json`
+  );
+
+  if(!fs.existsSync(pathToConfigFile)){
+    console.log("No custom config file found");
+    return{};
+  }
+
+  return fs.readJson(pathToConfigFile)
+}
 
 module.exports = defineConfig({
   allowCypressEnv: true,
@@ -7,6 +25,10 @@ module.exports = defineConfig({
     
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      // accept a environment value or use development by default
+      const file = config.env.environment || ''
+
+      return getConfigurationByFile(file, config.projectRoot)
     },
     specPattern: "cypress/e2e/**/**/*.{cy.js,js,jsx,ts,tsx,feature}",
     // excludeSpecPattern:"cypress/e2e/trial/.js",
