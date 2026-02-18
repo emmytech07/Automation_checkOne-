@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "cypress:open": "npx cypress open",
-    "test:smoke": "npx cypress run --spec \"cypress/e2e/smoke/*.cy.js\" --browser chrome --headless --record --parallel --group smoke-chrome --ci-build-id $GITHUB_RUN_ID",
-    "test:smoke:firefox": "npx cypress run --spec \"cypress/e2e/smoke/*.cy.js\" --browser firefox --headless --record --parallel --group smoke-firefox --ci-build-id $GITHUB_RUN_ID",
+    "test:smoke": "npx cypress run --env grepTags=smoke --browser chrome --headless --record --parallel --group smoke-chrome --ci-build-id $GITHUB_RUN_ID",
+    "test:smoke:firefox": "npx cypress run --env grepTags=smoke --browser firefox --headless --record --parallel --group smoke-firefox --ci-build-id $GITHUB_RUN_ID",
     "test:regression:chunk1": "npx cypress run --spec \"cypress/e2e/regression/chunk-1/*.cy.js\" --browser chrome --headless --record --parallel --group regression-chunk1-chrome --ci-build-id $GITHUB_RUN_ID",
     "test:regression:chunk2": "npx cypress run --spec \"cypress/e2e/regression/chunk-2/*.cy.js\" --browser chrome --headless --record --parallel --group regression-chunk2-chrome --ci-build-id $GITHUB_RUN_ID",
     "test:regression:chunk3": "npx cypress run --spec \"cypress/e2e/regression/chunk-3/*.cy.js\" --browser chrome --headless --record --parallel --group regression-chunk3-chrome --ci-build-id $GITHUB_RUN_ID",

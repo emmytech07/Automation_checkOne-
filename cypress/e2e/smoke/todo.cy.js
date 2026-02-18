@@ -11,7 +11,7 @@
 // please read our getting started guide:
 // https://on.cypress.io/introduction-to-cypress
 
-describe('example to-do app', () => {
+describe('example to-do app @smoke', () => {
   beforeEach(() => {
     // Cypress starts out with a blank slate for each test
     // so we must tell it to visit our website with the `cy.visit()` command.
@@ -34,7 +34,7 @@ describe('example to-do app', () => {
     cy.get('.todo-list li').last().should('have.text', 'Walk the dog')
   })
 
-  it('can add new todo items', () => {
+  it('can add new todo items @smoke', () => {
     // We'll store our item text in a variable so we can reuse it
     const newItem = 'Feed the cat'
 
@@ -57,7 +57,7 @@ describe('example to-do app', () => {
       .should('have.text', newItem)
   })
 
-  it('can check off an item as completed', () => {
+  it('can check off an item as completed @smoke', () => {
     // In addition to using the `get` command to get an element by selector,
     // we can also use the `contains` command to get an element by its contents.
     // However, this will yield the <label>, which is lowest-level element that contains the text.
@@ -79,7 +79,7 @@ describe('example to-do app', () => {
       .should('have.class', 'completed')
   })
 
-  context('with a checked task', () => {
+  context('with a checked task @smoke', () => {
     beforeEach(() => {
       // We'll take the command we used above to check off an element
       // Since we want to perform multiple tests that start with checking
@@ -91,7 +91,7 @@ describe('example to-do app', () => {
         .check()
     })
 
-    it('can filter for uncompleted tasks', () => {
+    it('can filter for uncompleted tasks @smoke', () => {
       // We'll click on the "active" button in order to
       // display only incomplete items
       cy.contains('Active').click()
