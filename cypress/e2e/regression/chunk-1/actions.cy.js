@@ -115,7 +115,7 @@ context('Actions', () => {
     cy.get('.action-opacity>.btn').click({ force: true })
   })
 
-  it('.dblclick() - double click on a DOM element', () => {
+  it('.dblclick() - double click on a DOM element @not-prod', () => {
     // https://on.cypress.io/dblclick
 
     // Our app has a listener on 'dblclick' event in our 'scripts.js'
@@ -135,7 +135,7 @@ context('Actions', () => {
     cy.get('.rightclick-action-input-hidden').should('be.visible')
   })
 
-  it('.check() - check a checkbox or radio element', () => {
+  it('.check() - check a checkbox or radio element @not-prod', () => {
     // https://on.cypress.io/check
 
     // By default, .check() will check all

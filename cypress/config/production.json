@@ -1,5 +1,5 @@
 {
-    "baseUrl":"https://www.automationteststore.com/production/",
+    "baseUrl":"https://example.cypress.io/",
     "env": {
         "name":"Joe Blogs"
     }
