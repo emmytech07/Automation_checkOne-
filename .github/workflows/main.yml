@@ -52,6 +52,7 @@ jobs:
           docker run \
             -e CI=true \
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
+            -e CYPRESS_ENVIRONMENT_NAME=${{ github.event.inputs.environment || 'staging' }} \
             -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
             npm run test:smoke${{ matrix.browser == 'firefox' && ':firefox' || '' }} -- --config-file cypress/config/${{ github.event.inputs.environment || 'staging' }}.json
@@ -63,6 +64,7 @@ jobs:
           docker run \
             -e CI=true \
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
+            -e CYPRESS_ENVIRONMENT_NAME=${{ github.event.inputs.environment || 'staging' }} \
             -e GITHUB_RUN_ID=${{ github.run_id }} \
             -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
@@ -76,6 +78,7 @@ jobs:
           docker run \
             -e CI=true \
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
+            -e CYPRESS_ENVIRONMENT_NAME=${{ github.event.inputs.environment || 'staging' }} \
             -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
             npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }} -- --config-file cypress/config/${{ github.event.inputs.environment || 'staging' }}.json
