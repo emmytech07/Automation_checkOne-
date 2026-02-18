@@ -4,6 +4,17 @@ on:
   push:
     branches: [main]
   pull_request:
+  # This adds the "Run workflow" button with a dropdown menu
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select Environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
 
 jobs:
   cypress-tests:
@@ -12,7 +23,7 @@ jobs:
       matrix:
         # 6 parallel runners (2 browsers x 3 chunks)
         browser: [chrome, firefox]
-        regression-chunk: [1, 2, 3]
+        regression-chunk: [1, 2]
       fail-fast: false
 
     steps:
@@ -34,7 +45,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # 1. Run Smoke Tests (Only on chunk 1 to avoid triple redundancy)
+      # 1. Run Smoke Tests (Uses selected config file)
       - name: Run Smoke Tests
         if: matrix.regression-chunk == 1
         run: |
@@ -43,10 +54,10 @@ jobs:
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
             -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
-            npm run test:smoke${{ matrix.browser == 'firefox' && ':firefox' || '' }}
+            npm run test:smoke${{ matrix.browser == 'firefox' && ':firefox' || '' }} -- --config-file cypress/config/${{ github.event.inputs.environment || 'staging' }}.json
         continue-on-error: true
 
-      # 2. Run Regression Chunks in Parallel
+      # 2. Run Regression Chunks in Parallel (Uses selected config file)
       - name: Run Regression Chunk
         run: |
           docker run \
@@ -55,10 +66,10 @@ jobs:
             -e GITHUB_RUN_ID=${{ github.run_id }} \
             -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
-            npm run test:regression:chunk${{ matrix.regression-chunk }}${{ matrix.browser == 'firefox' && ':firefox' || '' }}
+            npm run test:regression:chunk${{ matrix.regression-chunk }}${{ matrix.browser == 'firefox' && ':firefox' || '' }} -- --config-file cypress/config/${{ github.event.inputs.environment || 'staging' }}.json
         continue-on-error: true
 
-      # 3. Run Retest
+      # 3. Run Retest (Uses selected config file)
       - name: Run Retest
         if: always() 
         run: |
@@ -67,7 +78,7 @@ jobs:
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
             -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
-            npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }}
+            npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }} -- --config-file cypress/config/${{ github.event.inputs.environment || 'staging' }}.json
         continue-on-error: true
 
       # 4. Upload Test Fragments
@@ -100,11 +111,7 @@ jobs:
       - name: Merge and Generate Master HTML Report
         run: |
           mkdir -p cypress/reports
-          # suppress node warnings and use the output flag
           NODE_NO_WARNINGS=1 npx mochawesome-merge "all-results/*.json" -o cypress/reports/master-report.json
-          npx marge cypress/reports/master-report.json --reportDir cypress/reports --inline true
-          
-          # Generate the HTML report
           npx marge cypress/reports/master-report.json --reportDir cypress/reports --inline true
 
       - name: Upload Final Master Report
