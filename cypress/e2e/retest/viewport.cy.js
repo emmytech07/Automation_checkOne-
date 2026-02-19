@@ -4,7 +4,7 @@ context('Viewport', () => {
     cy.visit('https://example.cypress.io/commands/viewport')
   })
 
-  it('cy.viewport() - set the viewport size and dimension @retest', () => {
+  it('cy.viewport() - set the viewport size and dimension @retest @staging', () => {
     // https://on.cypress.io/viewport
 
     cy.get('#navbar').should('be.visible')

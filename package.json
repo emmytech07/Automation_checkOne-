@@ -7,7 +7,7 @@
   
     "test:smoke": "npx cypress run --expose grep='smoke',grepFilterSpecs=true --browser chrome --headless --record --parallel --ci-build-id $GITHUB_RUN_ID",
     "test:smoke:firefox": "npx cypress run --expose grep='smoke',grepFilterSpecs=true --browser firefox --headless --record --parallel --ci-build-id $GITHUB_RUN_ID",
-    "test:smoke:prod": "npx cypress run --env grepTags=smoke+-not-prod --browser chrome --headless --record --parallel --group smoke-chrome-prod --ci-build-id $GITHUB_RUN_ID",
+    "test:smoke:prod": "npx cypress run grep=regression+-not-prod --browser chrome --headless --record --parallel  --ci-build-id $GITHUB_RUN_ID",
 
 
     "test:regression:chunk1": "npx cypress run --expose grep='regression',grepFilterSpecs=true --browser chrome --headless --record --parallel --ci-build-id $GITHUB_RUN_ID",
@@ -23,7 +23,7 @@
     "simple-run": "npx cypress run --spec cypress/e2e/regression/chunk-1",
     "junit-merge": "npx junit-merge -d cypress/results/junit/results -o cypress/results/junit/results.xml",
     "delete-junit-report": "rm -rf cypress/results/junit/results.xml",
-    
+
     "delete-results": "rm -rf cypress/results/* || true",
     "mochaweome-merge": "npx mochawesome-merge cypress/results/mochawesome/*.json > mochawesome.json && npx marge mochawesome.json",
     "delete-mocha-report": "rm -rf mochawesome-report/* || true",

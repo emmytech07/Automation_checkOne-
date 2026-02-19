@@ -7,7 +7,7 @@ context('Assertions', () => {
     cy.visit('commands/assertions')
   })
 
-  describe('Implicit Assertions @not-prod', () => {
+  describe('Implicit Assertions @staging', () => {
     it('.should() - make an assertion about the current subject', () => {
       // https://on.cypress.io/should
       cy.get('.assertion-table')
@@ -49,7 +49,7 @@ context('Assertions', () => {
     })
   })
 
-  describe('Explicit Assertions @not-prod', () => {
+  describe('Explicit Assertions @production', () => {
     // https://on.cypress.io/assertions
     it('expect - make an assertion about a specified subject', () => {
       // We can use Chai's BDD style assertions
@@ -91,7 +91,7 @@ context('Assertions', () => {
         })
     })
 
-    it('finds element by class name regex @not-prod', () => {
+    it('finds element by class name regex @staging', () => {
       cy.get('.docs-header')
         .find('div')
         // .should(cb) callback function will be retried

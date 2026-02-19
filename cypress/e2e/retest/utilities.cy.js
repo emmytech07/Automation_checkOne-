@@ -5,7 +5,7 @@ context('Utilities', () => {
     cy.visit('/'+'utilities')
   })
 
-  it('Cypress._ - call a lodash method @restest', () => {
+  it('Cypress._ - call a lodash method @restest @staging', () => {
     // https://on.cypress.io/_
     cy.request('https://jsonplaceholder.cypress.io/users')
       .then((response) => {

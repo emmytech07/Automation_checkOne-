@@ -9,7 +9,7 @@ context('Actions', () => {
 
   // https://on.cypress.io/interacting-with-elements
 
-  it('.type() - type into a DOM element @not-prod @regression', () => {
+  it('.type() - type into a DOM element @production @regression @staging', () => {
     // https://on.cypress.io/type
     cy.get('.action-email').type('fake@email.com')
     cy.get('.action-email').should('have.value', 'fake@email.com')
@@ -35,14 +35,14 @@ context('Actions', () => {
     cy.get('.action-disabled').should('have.value', 'disabled error checking')
   })
 
-  it('.focus() - focus on a DOM element @regression', () => {
+  it('.focus() - focus on a DOM element @regression @staging', () => {
     // https://on.cypress.io/focus
     cy.get('.action-focus').focus()
     cy.get('.action-focus').should('have.class', 'focus')
       .prev().should('have.attr', 'style', 'color: orange;')
   })
 
-  it('.blur() - blur off a DOM element @regression', () => {
+  it('.blur() - blur off a DOM element @regression @staging', () => {
     // https://on.cypress.io/blur
     cy.get('.action-blur').type('About to blur')
     cy.get('.action-blur').blur()
@@ -50,7 +50,7 @@ context('Actions', () => {
       .prev().should('have.attr', 'style', 'color: red;')
   })
 
-  it('.clear() - clears an input or textarea element @regression', () => {
+  it('.clear() - clears an input or textarea element @regression @staging', () => {
     // https://on.cypress.io/clear
     cy.get('.action-clear').type('Clear this text')
     cy.get('.action-clear').should('have.value', 'Clear this text')
