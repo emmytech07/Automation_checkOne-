@@ -55,7 +55,7 @@ jobs:
             -e CYPRESS_ENVIRONMENT_NAME=${{ github.event.inputs.environment || 'staging' }} \
             -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
-            npm run test:smoke${{ matrix.browser == 'firefox' && ':firefox' || '' }} -- --config-file cypress/config/${{ github.event.inputs.environment || 'staging' }}.json
+            npm run test:smoke${{ matrix.browser == 'firefox' && ':firefox' || '' }} --expose grep="smoke",grepFilterSpecs=true
         continue-on-error: true
 
       # 2. Run Regression Chunks in Parallel (Uses selected config file)
@@ -68,7 +68,7 @@ jobs:
             -e GITHUB_RUN_ID=${{ github.run_id }} \
             -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
-            npm run test:regression:chunk${{ matrix.regression-chunk }}${{ matrix.browser == 'firefox' && ':firefox' || '' }} -- --config-file cypress/config/${{ github.event.inputs.environment || 'staging' }}.json
+            npm run test:regression:chunk${{ matrix.regression-chunk }}${{ matrix.browser == 'firefox' && ':firefox' || '' }} --expose grep="regression",grepFilterSpecs=true
         continue-on-error: true
 
       # 3. Run Retest (Uses selected config file)
@@ -81,7 +81,7 @@ jobs:
             -e CYPRESS_ENVIRONMENT_NAME=${{ github.event.inputs.environment || 'staging' }} \
             -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
-            npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }} -- --config-file cypress/config/${{ github.event.inputs.environment || 'staging' }}.json
+            npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }} --expose grep="retest",grepFilterSpecs=true
         continue-on-error: true
 
       # 4. Upload Test Fragments
