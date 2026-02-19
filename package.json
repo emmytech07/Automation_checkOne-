@@ -5,20 +5,20 @@
   "main": "index.js",
   "scripts": {
   
-    "test:smoke": "npx cypress run --env grepTags=smoke --browser chrome --headless --record --parallel --group smoke-chrome --ci-build-id $GITHUB_RUN_ID",
-    "test:smoke:firefox": "npx cypress run --env grepTags=smoke --browser firefox --headless --record --parallel --group smoke-firefox --ci-build-id $GITHUB_RUN_ID",
+    "test:smoke": "npx cypress run --expose grep='smoke',grepFilterSpecs=true --browser chrome --headless --record --parallel --ci-build-id $GITHUB_RUN_ID",
+    "test:smoke:firefox": "npx cypress run --expose grep='smoke',grepFilterSpecs=true --browser firefox --headless --record --parallel --ci-build-id $GITHUB_RUN_ID",
     "test:smoke:prod": "npx cypress run --env grepTags=smoke+-not-prod --browser chrome --headless --record --parallel --group smoke-chrome-prod --ci-build-id $GITHUB_RUN_ID",
 
 
-    "test:regression:chunk1": "npx cypress run --env grepTags=regression --spec 'cypress/e2e/regression/chunk-1/*.cy.js' --browser chrome --headless --record --parallel --group regression-chunk1-chrome --ci-build-id $GITHUB_RUN_ID",
-    "test:regression:chunk2": "npx cypress run --env grepTags=regression --spec 'cypress/e2e/regression/chunk-2/*.cy.js' --browser chrome --headless --record --parallel --group regression-chunk2-chrome --ci-build-id $GITHUB_RUN_ID",
-    "test:regression:chunk3": "npx cypress run --env grepTags=regression --spec 'cypress/e2e/regression/chunk-3/*.cy.js' --browser chrome --headless --record --parallel --group regression-chunk3-chrome --ci-build-id $GITHUB_RUN_ID",
+    "test:regression:chunk1": "npx cypress run --expose grep='regression',grepFilterSpecs=true --browser chrome --headless --record --parallel --ci-build-id $GITHUB_RUN_ID",
+    "test:regression:chunk2": "npx cypress run --expose grep='regression',grepFilterSpecs=true --browser chrome --headless --record --parallel --ci-build-id $GITHUB_RUN_ID",
+    "test:regression:chunk3": "npx cypress run --expose grep='regression',grepFilterSpecs=true --browser chrome --headless --record --parallel --ci-build-id $GITHUB_RUN_ID",
 
-    "test:regression:chunk1:firefox": "npx cypress run --env grepTags=regression --spec 'cypress/e2e/regression/chunk-1/*.cy.js' --browser firefox --headless --record --parallel --group regression-chunk1-firefox --ci-build-id $GITHUB_RUN_ID",
-    "test:regression:chunk2:firefox": "npx cypress run --env grepTags=regression --spec 'cypress/e2e/regression/chunk-2/*.cy.js' --browser firefox --headless --record --parallel --group regression-chunk2-firefox --ci-build-id $GITHUB_RUN_ID",
-    "test:regression:chunk3:firefox": "npx cypress run --env grepTags=regression --spec 'cypress/e2e/regression/chunk-3/*.cy.js' --browser firefox --headless --record --parallel --group regression-chunk3-firefox --ci-build-id $GITHUB_RUN_ID",
+    "test:regression:chunk1:firefox": "npx cypress run --expose grep='regression',grepFilterSpecs=true --browser firefox --headless --record --parallel  --ci-build-id $GITHUB_RUN_ID",
+    "test:regression:chunk2:firefox": "npx cypress run  --expose grep='regression',grepFilterSpecs=true --browser firefox --headless --record --parallel --ci-build-id $GITHUB_RUN_ID",
+    "test:regression:chunk3:firefox": "npx cypress run  --expose grep='regression',grepFilterSpecs=true --browser firefox --headless --record --parallel --ci-build-id $GITHUB_RUN_ID",
 
-    "test:retest": "npx cypress run --env grepTags=retest --browser chrome --headless --record --parallel --group retest-chrome --ci-build-id $GITHUB_RUN_ID",
+    "test:retest": "npx cypress run  --expose grep='retest',grepFilterSpecs=true --browser chrome --headless --record --parallel --ci-build-id $GITHUB_RUN_ID",
 
     "simple-run": "npx cypress run --spec cypress/e2e/regression/chunk-1",
     "junit-merge": "npx junit-merge -d cypress/results/junit/results -o cypress/results/junit/results.xml",

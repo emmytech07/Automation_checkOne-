@@ -5,7 +5,7 @@ context('Utilities', () => {
     cy.visit('/'+'utilities')
   })
 
-  it('Cypress._ - call a lodash method', () => {
+  it('Cypress._ - call a lodash method @restest', () => {
     // https://on.cypress.io/_
     cy.request('https://jsonplaceholder.cypress.io/users')
       .then((response) => {
@@ -15,7 +15,7 @@ context('Utilities', () => {
       })
   })
 
-  it('Cypress.$ - call a jQuery method', () => {
+  it('Cypress.$ - call a jQuery method @retest', () => {
     // https://on.cypress.io/$
     let $li = Cypress.$('.utility-jquery li:first')
 
