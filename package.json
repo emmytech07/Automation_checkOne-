@@ -23,6 +23,7 @@
     "simple-run": "npx cypress run --spec cypress/e2e/regression/chunk-1",
     "junit-merge": "npx junit-merge -d cypress/results/junit/results -o cypress/results/junit/results.xml",
     "delete-junit-report": "rm -rf cypress/results/junit/results.xml",
+    
     "delete-results": "rm -rf cypress/results/* || true",
     "mochaweome-merge": "npx mochawesome-merge cypress/results/mochawesome/*.json > mochawesome.json && npx marge mochawesome.json",
     "delete-mocha-report": "rm -rf mochawesome-report/* || true",

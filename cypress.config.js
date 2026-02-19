@@ -25,7 +25,8 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       // 1. Load environment config synchronously
-      const file = config.env.ENVIRONMENT_NAME || "";
+      const file = config.env.ENVIRONMENT_NAME || process.env.CYPRESS_ENVIRONMENT_NAME || 'staging';
+
       const envConfig = file ? getConfigurationByFile(file, config.projectRoot) : {};
 
       // 2. Merge loaded config with Cypress config
