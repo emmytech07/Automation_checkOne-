@@ -2,6 +2,7 @@
     "baseUrl":"https://example.cypress.io/",
     "env": {
         "name":"Joe Blogs",
-        "lname":"John"
+        "lname":"John",
+        "fname":"sam"
     }
 }
