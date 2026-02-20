@@ -3,11 +3,11 @@ name: Cypress Docker Full Website Automation
 on:
   push:
     branches:
-      - staging
       - feature/*
   pull_request:
     branches:
       - main
+      - staging
   # This adds the "Run workflow" button with a dropdown menu w
   workflow_dispatch:
     inputs:
