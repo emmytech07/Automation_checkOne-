@@ -8,7 +8,7 @@ on:
   pull_request:
     branches:
       - main
-  # This adds the "Run workflow" button with a dropdown menu
+  # This adds the "Run workflow" button with a dropdown menu w
   workflow_dispatch:
     inputs:
       environment:
