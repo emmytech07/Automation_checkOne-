@@ -1,11 +1,22 @@
-name: Production - Cypress Automation
+name: Staging - Cypress Automation
 
 on:
+  push:
+    branches: [ "feature/*" ]
   pull_request:
-    branches: [ "main" ]
- 
+    branches: [ "staging" ]
+  # This adds the "Run workflow" button with a dropdown menu w
   workflow_dispatch: # Allows manual run default to staging
-   
+    # inputs:
+    #   environment:
+    #     description: 'Select Environment'
+    #     required: true
+    #     default: 'staging'
+    #     type: choice
+    #     options:
+    #       - staging
+    #       - production
+
 jobs:
   cypress-tests:
     runs-on: ubuntu-latest
@@ -54,11 +65,11 @@ jobs:
           docker run \
             -e CI=true \
             -e CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }} \
-            -e CYPRESS_ENVIRONMENT_NAME=${{ github.event.inputs.environment || 'staging' }} \   
+            -e CYPRESS_ENVIRONMENT_NAME=${{ github.event.inputs.environment || 'staging' }} \
             -e GITHUB_RUN_ID=${{ github.run_id }} \
             -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
-            npm run test:regression:chunk${{ matrix.regression-chunk }}${{ matrix.browser == 'firefox' && ':firefox' || '' }} --expose grep="production",grepFilterSpecs=true
+            npm run test:regression:chunk${{ matrix.regression-chunk }}${{ matrix.browser == 'firefox' && ':firefox' || '' }} --expose grep="regression",grepFilterSpecs=true
         continue-on-error: true
 
       # 3. Run Retest (Uses selected config file)
@@ -71,7 +82,7 @@ jobs:
             -e CYPRESS_ENVIRONMENT_NAME=${{ github.event.inputs.environment || 'staging' }} \
             -v $PWD:/e2e -v /e2e/node_modules -w /e2e \
             rahul-cypress-custom:latest \
-            npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }} --expose grep="production+-@not-prod",grepFilterSpecs=true
+            npm run test:retest${{ matrix.browser == 'firefox' && ':firefox' || '' }} --expose grep="retest",grepFilterSpecs=true
         continue-on-error: true
 
       # 4. Upload Test Fragments

@@ -11,7 +11,7 @@
 // please read our getting started guide:
 // https://on.cypress.io/introduction-to-cypress
 
-describe('example to-do app @smoke', () => {
+describe('example to-do app @smoke @not-prod', () => {
   beforeEach(() => {
     // Cypress starts out with a blank slate for each test
     // so we must tell it to visit our website with the `cy.visit()` command.
@@ -79,7 +79,7 @@ describe('example to-do app @smoke', () => {
       .should('have.class', 'completed')
   })
 
-  context('with a checked task @smoke', () => {
+  context('with a checked task @smoke @not-prod', () => {
     beforeEach(() => {
       // We'll take the command we used above to check off an element
       // Since we want to perform multiple tests that start with checking
@@ -91,7 +91,7 @@ describe('example to-do app @smoke', () => {
         .check()
     })
 
-    it('can filter for uncompleted tasks @smoke', () => {
+    it('can filter for uncompleted tasks @smoke @not-prod', () => {
       // We'll click on the "active" button in order to
       // display only incomplete items
       cy.contains('Active').click()
