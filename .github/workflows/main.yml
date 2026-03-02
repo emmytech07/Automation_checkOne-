@@ -2,23 +2,20 @@ name: Cypress Docker Full Website Automation
 
 on:
   push:
-    branches:
-      - feature/*
+    branches: [ "feature/*" ]
   pull_request:
-    branches:
-      - main
-      - staging
+    branches: [ "staging" ]
   # This adds the "Run workflow" button with a dropdown menu w
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Select Environment'
-        required: true
-        default: 'staging'
-        type: choice
-        options:
-          - staging
-          - production
+  workflow_dispatch: # Allows manual run default to staging
+    # inputs:
+    #   environment:
+    #     description: 'Select Environment'
+    #     required: true
+    #     default: 'staging'
+    #     type: choice
+    #     options:
+    #       - staging
+    #       - production
 
 jobs:
   cypress-tests:
